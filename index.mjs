@@ -1,45 +1,84 @@
-import HDKey from 'hdkey'
-import { getPhrase } from './util.mjs';
+import {getPhrase} from './util.mjs';
 import bip39 from 'bip39';
-import { encode as bs58e, decode as bs58d } from 'bs58';
-const assert = (await import('assert')).default;
 import CoinKey from 'coinkey';
-import coininfo from 'coininfo';
-import bip44c from 'bip44-constants';
+import HDKey from 'hdkey'
+import coininfo from "coininfo";
 
 
 
-global.pp=function pp(val) { return JSON.stringify(val,null,2); };
-global.log=function log(val) { console.log(val); };
-global.dump=function dump(val) { return log(pp(val)); };
+const list = ['BTC'];//, 'BCH', 'DOGE', 'ZEN'];
 
-global.phrase= await getPhrase();
-global.seed = bip39.mnemonicToSeedSync(phrase);
-global.hdkey = HDKey.fromMasterSeed(seed)
-const ci={};
-function Coin(sym){
-  const info=coininfo(sym);
-  if(info==null)
-    return null;
-  const versions=info.versions;
+class Chain {
+    constructor(sym) {
+        this.sym = sym;
+    }
 
-  this.sym=sym;
-  this.versions=versions;
-  this.bip44=versions.bip44;
-  this.path=`m/44'/${this.bip44}'/0'/0`;
-  this.root=hdkey.derive(this.path);
-  this.addrs=[];
-  for(var i=0;i<3;i++){
-    const child = this.root.deriveChild(i);
-    this.addrs.push(new CoinKey(child.privateKey,coininfo(sym)).publicAddress);
-  };
+    getInfo() {
+        return coinInfo(this.sym);
+    }
+
+    getVersions() {
+        return this.getInfo().versions;
+    }
+
+    getBip44() {
+        return this.getVersions().bip44;
+    }
+
+    getPath() {
+        const parts = ['m', "44'", null, "0'", "0'"];
+        parts[2] = this.getBip44();
+        return parts.join('/');
+    }
 }
-function Wallet(...syms){
-  this.coins={};
-  syms.forEach((sym)=>{
-    this.coins[sym]=new Coin(sym);
-  });
-}
-global.keys=Object.keys;
-dump(new Wallet('BTC','BCH','DOGE','ZEN'));
+const chains={};
+chains["BTC"]=new Chain("BTC");
+chains["BCH"]=new Chain("BCH");
 
+class Coin {
+    constructor(chain) {
+        const seed = bip39.mnemonicToSeedSync(phrase).toString("hex");
+        const hdkey = HDKey.fromMasterSeed(seed);
+
+        this.chain=chain;
+        this.addrs = [];
+        for (let i = 0; i < 4; i++) {
+            this.addrs.push(this.getAddress(i));
+        }
+    }
+
+    getChain() {
+        return chains[this.sym];
+    }
+
+    getBip32ExtendedKeys() {
+        const data={};
+        data.chain = this.getChain();
+        data.path = data.chain.getPath();
+        return hdkey.derive(data.path);
+    }
+
+    getAddress(idx) {
+        const extKeys = this.getBip32ExtendedKeys();
+        const child = extKeys.deriveChild(idx)
+        const coinKey = new CoinKey(child.privateKey, coinInfo(this.sym));
+        return coinKey.publicAddress;
+    }
+}
+
+class Wallet {
+    constructor(hdkey) {
+        this.hdkey=hdkey;
+    }
+}
+
+const phrase = await getPhrase();
+const seed = bip39.mnemonicToSeedSync(phrase).toString("hex");
+const hdkey = HDKey.fromMasterSeed(seed);
+const wallet = new Wallet(hdkey);
+console.log(wallet);
+
+
+//coins[sym] = new Coin(sym);
+// coins[sym] = new Coin(sym);
+//const wallet = new Wallet(coins);
