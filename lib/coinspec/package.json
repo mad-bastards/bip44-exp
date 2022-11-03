@@ -1,0 +1,35 @@
+{
+  "name": "coininfo",
+  "version": "5.2.1",
+  "description": "JavaScript component for crypto currency specific information.",
+  "license": "MIT",
+  "keywords": [
+    "cryptography",
+    "crypto",
+    "coin",
+    "bitcoin",
+    "bitcoin gold",
+    "litecoin",
+    "viacoin",
+    "groestlcoin",
+    "elliptic",
+    "curve",
+    "dogecoin",
+    "blackcoin",
+    "namecoin",
+    "denarius",
+    "dash",
+    "monacoin",
+    "zcash",
+    "vertcoin",
+    "qtum"
+  ],
+  "repository": {
+    "url": "https://github.com/PopeNobody/coinspec",
+    "type": "git"
+  },
+  "main": "./index.mjs",
+  "dependencies": {
+    "safe-buffer": "^5.1.1"
+  }
+}
