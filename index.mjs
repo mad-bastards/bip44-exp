@@ -2,11 +2,36 @@ import HDKey from 'hdkey'
 import { getPhrase } from './util.mjs';
 import bip39 from 'bip39';
 import { encode as bs58e, decode as bs58d } from 'bs58';
-import bip44c from 'bip44-constants';
 const assert = (await import('assert')).default;
+//import coinspec from 'coinspec';
+
+//import bip44c from 'bip44-constants';
 import CoinKey from 'coinkey';
 import coininfo from 'coininfo';
+const coinspec=coininfo;
 
+function bufferizeVersion (version) {
+  if (typeof version === 'string') return hexStringToBuffer(version)
+  if (typeof version === 'number') return beUIntToBuffer(version)
+  throw new Error('invalid version type.')
+}
+
+// accepts hex string sequence with or without 0x prefix
+function hexStringToBuffer (input) {
+  var isValidRE = /^(0x)?([\dA-Fa-f]{2})+$/g
+  if (!isValidRE.test(input)) throw new Error('invalid hex string.')
+  return Buffer.from(input.slice(input.slice(0, 2) === '0x' ? 2 : 0), 'hex')
+}
+
+function beUIntToBuffer (num) {
+  var length
+  if (num === 0) length = 1
+  else if (num > 0) length = Math.ceil((Math.log(num + 1) / Math.log(2)) / 8)
+  var buf = Buffer.alloc(length)
+  buf.writeUIntBE(num, 0, length)
+
+  return buf
+}
 
 const Coinomi = {
   "BCH" : "qqqrq9706mttv5h8vvcw82ze63ua38y22y36798xn8",
@@ -24,7 +49,7 @@ global.log=function log(val) { console.log(val); };
 global.dump=function dump(val) { return log(pp(val)); };
 
 function Coin(sym){
-  const info=coininfo(sym);
+  const info=coinspec(sym);
   if(info==null)
     throw new Error(`no coininfo for "${sym}"`);
 
@@ -55,6 +80,8 @@ global.seed = bip39.mnemonicToSeedSync(phrase);
 global.hdkey = HDKey.fromMasterSeed(seed)
 global.keys=Object.keys;
 
-const wallet = new Wallet('BCH','BTC',"DASH",'DOGE',"LBC","XMR","XRP",'ZEN');
+const wallet = new Wallet('BCH','BTC',"DASH",'DOGE',
+//"LBC","XMR","XRP",
+  'ZEN');
 console.log(wallet);
 
