@@ -3,12 +3,8 @@ import { getPhrase } from './util.mjs';
 import bip39 from 'bip39';
 import { encode as bs58e, decode as bs58d } from 'bs58';
 const assert = (await import('assert')).default;
-//import coinspec from 'coinspec';
-
-//import bip44c from 'bip44-constants';
 import CoinKey from 'coinkey';
 import coininfo from 'coininfo';
-const coinspec=coininfo;
 
 function bufferizeVersion (version) {
   if (typeof version === 'string') return hexStringToBuffer(version)
@@ -49,7 +45,7 @@ global.log=function log(val) { console.log(val); };
 global.dump=function dump(val) { return log(pp(val)); };
 
 function Coin(sym){
-  const info=coinspec(sym);
+  const info=coininfo(sym);
   if(info==null)
     throw new Error(`no coininfo for "${sym}"`);
 
