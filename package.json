@@ -9,12 +9,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bignumber": "^1.1.0",
     "bip32": "^3.1.0",
+    "bip38": "^3.1.1",
     "bip39": "^3.0.4",
-    "bip44-constants": "^164.0.0",
-    "coininfo": "^5.2.1",
+    "bitcoinjs-lib": "^6.0.2",
+    "bs58check": "^2.1.2",
     "coinkey": "^3.0.0",
     "ecpair": "^2.1.0",
-    "hdkey": "^2.0.1"
+    "hdkey": "^2.0.1",
+    "jsbn": "^1.1.0",
+    "secp256k1": "^4.0.3"
   }
 }

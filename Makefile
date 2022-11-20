@@ -1,11 +1,11 @@
 export NODE_OPTIONS=--openssl-legacy-provider
 SHELL:=/bin/bash
-NODE:=$(shell type -p node)
+NODE:=$(shell type -p vi_node)
 MAKEFLAGS:=-rR
 
 all:
 	@echo index.mjs:1:running
-	${NODE} index.mjs
+	set pipefail; ${NODE} index.mjs 2>&1 | tee node.out 2>&1 | less -S
 
 tests:
 	${NODE} tests/genBTC.mjs

@@ -1,0 +1,26 @@
+ HDNode {
+    _privateKey: <Buffer 18 37 c1 be 8e 29 95 ec 11 cd a2 b0 66 15 1b e2 cf b4 8a df 9e 47 b1 51 d4 6a da b3 a2 1c df 67>,
+    _publicKey: <Buffer 03 d9 02 f3 5f 56 0e 04 70 c6 33 13 c7 36 91 68 d9 d7 df 2d 49 bf 29 5f d9 fb 7c b1 09 cc ee 04 94>,
+
+    chainCode: <Buffer 79 23 40 8d ad d3 c7 b5 6e ed 15 56 77 07 ae 5e 5d ca 08 9d e9 72 e0 7f 3b 86 04 50 e2 a3 b7 0e>,
+    chainCode: <Buffer 79 23 40 8d ad d3 c7 b5 6e ed 15 56 77 07 ae 5e 5d ca 08 9d e9 72 e0 7f 3b 86 04 50 e2 a3 b7 0e>,
+    parent: undefined,
+    privateKey: <Buffer 18 37 c1 be 8e 29 95 ec 11 cd a2 b0 66 15 1b e2 cf b4 8a df 9e 47 b1 51 d4 6a da b3 a2 1c df 67>,
+    publicKey: <Buffer 03 d9 02 f3 5f 56 0e 04 70 c6 33 13 c7 36 91 68 d9 d7 df 2d 49 bf 29 5f d9 fb 7c b1 09 cc ee 04 94>
+  }
+
+  HDKey {
+    _fingerprint: 1942346250,
+    _identifier: <Buffer 73 c5 da 0a 03 d2 d0 80 3b 73 1f 04 24 2b b4 0c ed 2f 8b bc>,
+    chainCode: <Buffer 79 23 40 8d ad d3 c7 b5 6e ed 15 56 77 07 ae 5e 5d ca 08 9d e9 72 e0 7f 3b 86 04 50 e2 a3 b7 0e>,
+    _privateKey: <Buffer 18 37 c1 be 8e 29 95 ec 11 cd a2 b0 66 15 1b e2 cf b4 8a df 9e 47 b1 51 d4 6a da b3 a2 1c df 67>,
+    _publicKey: <Buffer 03 d9 02 f3 5f 56 0e 04 70 c6 33 13 c7 36 91 68 d9 d7 df 2d 49 bf 29 5f d9 fb 7c b1 09 cc ee 04 94>,
+    depth: 0,
+    index: 0,
+    parentFingerprint: 0,
+    versions: {
+      private: 76066276,
+      public: 76067358
+    }
+  }
+]

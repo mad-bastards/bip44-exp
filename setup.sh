@@ -1,1 +1,1 @@
-cd node_modules && ln -sf ../lib/coininfo .
+cd node_modules && ln -sf ../lib/coin{info,spec} .
